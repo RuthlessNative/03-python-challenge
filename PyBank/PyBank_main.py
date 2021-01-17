@@ -14,7 +14,7 @@ with open(data_csv) as csv_file:
     ch_list = []
     ch = 0
     goat_inc = [0,0]
-    goat_dec = 0
+    goat_dec = [0,0]
 
     for row in csv_reader:
         tot_mo += 1
@@ -22,10 +22,11 @@ with open(data_csv) as csv_file:
         ch = int(row[1]) - prev_profit
         ch_list.append(ch)
         if ch > int(goat_inc[1]):
-            goat_inc [0] = row[0]
-            goat_inc[1] = row[1]
-        elif ch < goat_dec:
-            goat_dec = ch
+            goat_inc[0] = row[0]
+            goat_inc[1] = ch
+        elif ch < int(goat_dec[1]):
+            goat_dec[0] = row[0]
+            goat_dec[1] = ch
         prev_profit = int(row[1])
 
     def average(numbers):
@@ -35,23 +36,22 @@ with open(data_csv) as csv_file:
             total += number
         return total / length
     
+    #write this as a list? and then print here and in with open?
     print("Financial Analysis")
     print("----------------------------")
     print(f"Total Months: {tot_mo}")
     print(f"Total: ${net_tot}")
-    #print(ch_list)
     print(f"Average Change: ${round(average(ch_list[1:]), 2)}")
     print(f"Greatest Increase in Profits: {goat_inc[0]} (${goat_inc[1]})")
-    print(f"Greatest Increase in Profits: (${goat_dec})")
+    print(f"Greatest Decrease in Profits: {goat_dec[0]} (${goat_dec[1]})")
 
-    output_path = os.path.join("PyBank_Analysis", "PyBank_Output.txt")
+output_path = os.path.join("PyBank_Analysis", "PyBank_Output.txt")
 
-
- 
-file1 = open("PyBank_Output.txt","w") 
-  
-# \n is placed to indicate EOL (End of Line) 
-file1.write(f"Average Change: ${round(average(ch_list[1:]), 2)}") 
-file1.write(f"Average Change: ${round(average(ch_list[1:]), 2)}") 
-file1.close() #to change file access modes
-
+with open(output_path, "w", newline = '') as output_file:
+    writer = csv.writer(output_file)
+    writer.writerow([f"Financial Analysis"])
+    writer.writerow(["----------------------------"])
+    writer.writerow([f"Total Month: ${net_tot}"])
+    writer.writerow([f"Average Change: ${round(average(ch_list[1:]), 2)}"])
+    writer.writerow([f"Greatest Increase in Profits: {goat_inc[0]} (${goat_inc[1]})"])
+    writer.writerow([f"Greatest Decrease in Profits: {goat_dec[0]} (${goat_dec[1]})"])
