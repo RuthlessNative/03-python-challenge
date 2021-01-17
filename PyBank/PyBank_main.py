@@ -52,6 +52,6 @@ file1 = open("PyBank_Output.txt","w")
   
 # \n is placed to indicate EOL (End of Line) 
 file1.write(f"Average Change: ${round(average(ch_list[1:]), 2)}") 
-
+file1.write(f"Average Change: ${round(average(ch_list[1:]), 2)}") 
 file1.close() #to change file access modes
 
