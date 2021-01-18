@@ -61,7 +61,7 @@ print(f"Greatest Decrease in Profits: {goat_dec[0]} (${goat_dec[1]})")
 
 # Create file path where the output data is written to
 output_path = os.path.join("PyBank_Analysis", "PyBank_Output.txt")
-# Write output to the data file
+# Write output data to the output file
 with open(output_path, "w", newline = '') as output_file:
     writer = csv.writer(output_file)
     writer.writerow([f"Financial Analysis"])
